@@ -68,11 +68,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setCurrentUser(user);
       
       if (user) {
-        const docRef = doc(db, 'users', user.uid);
-        const docSnap = await getDoc(docRef);
-        
-        if (docSnap.exists()) {
-          setUserProfile(docSnap.data() as UserProfile);
+        try {
+          const docRef = doc(db, 'users', user.uid);
+          const docSnap = await getDoc(docRef);
+          
+          if (docSnap.exists()) {
+            setUserProfile(docSnap.data() as UserProfile);
+          }
+        } catch (error) {
+          console.error('Error fetching user profile:', error);
+          // Continue without user profile if there's an error
         }
       } else {
         setUserProfile(null);
