@@ -70,6 +70,9 @@ function App() {
                   <AdminDashboard />
                 </ProtectedRoute>
               } />
+              
+              {/* Catch-all route for unmatched paths */}
+              <Route path="*" element={<HomePage />} />
             </Routes>
           </Layout>
         </div>
